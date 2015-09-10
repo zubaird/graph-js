@@ -56,7 +56,12 @@ Graph.prototype.getDistances = function(source) {
 }
 
 Graph.prototype.shortestPath = function(start,end) {
-  
+  var distances = this.getDistances(start)
+  for (var i = 0; i < distances.length; i++) {
+    if (distances[i].vertex == end) {
+      return distances[i].distance;
+    }
+  }
 }
 
 module.exports = Graph

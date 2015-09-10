@@ -25,7 +25,7 @@ var graphList = [
 ]
 ```
 ## Further Explanation of what this array represents
-![graphdata](./images/graph-data-01.png)
+![graphdata](./images/graph-data-01-01.png)
 
 ## Breadth-First Search
 Breadth-First Search (BFS) is an extremely important algorithm to have in our toolbelt.  Here we'll be using it to track the **distance** every **vertex** is from a given source.

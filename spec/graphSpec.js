@@ -39,18 +39,22 @@ describe("Graph", function() {
   })
 
   describe("#shortestPath",function(){
-    it("finds the shortest path between two vertices",function(){
-      console.log(graph.showGraph());
-      expect(graph.shortestPath(0,4)).toEqual(3)
-
+    it("finds the shortest path between 0 to 4",function(){
+      expect(graph.shortestPath(0,4)).toEqual(4)
+    })
+    it("finds the shortest path between 0 to 1", function(){
       expect(graph.shortestPath(0,1)).toEqual(1)
-
+    })
+    it("finds the shortest path between 1 to 4",function(){
       expect(graph.shortestPath(1,4)).toEqual(4)
-
+    })
+    it("finds the shortest path between 5 to 4",function(){
       expect(graph.shortestPath(5,4)).toEqual(1)
-
+    })
+    it("finds the shortest path between 3 to 5",function(){
       expect(graph.shortestPath(3,5)).toEqual(1)
-
+    })
+    it("finds the shortest path between 3 to 4",function(){
       expect(graph.shortestPath(3,4)).toEqual(2)
     })
   })
