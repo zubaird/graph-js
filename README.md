@@ -3,7 +3,11 @@ Graph data structures are one of the most important data structures that we use.
 
 One of the most common and popular problems that can be solved by organizing data as a graph is finding the **shortest path** between two points.  That will be our ultimate goal for this exercise.
 
-The data structure we will be using is an undirected and unweighted graph.  There are other types of graphs that include direction, and/or weight.  Those can be useful in representing roads with distance and cities as vertices.
+The data structure we will be using is an undirected and unweighted graph.  There are other types of graphs that include direction, and/or weight.  Those can be useful in representing roads with distance and cities as vertices.  Other uses for graphs include modeling circuits, social networks, maps, and scheduling.
+
+For further reading on the specific type of graph we're working on:
+
+[Algorithms 4th Edition](http://algs4.cs.princeton.edu/41graph/)
 
 ## Setup
  * Fork and clone

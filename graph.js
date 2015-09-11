@@ -2,22 +2,22 @@ var Queue = require("./queue.js");
 
 function Graph(data) {
   this.data = data
-  this.vertices = []
+  this.vertices = {}
 }
 
 Graph.prototype.createGraph = function(){
-    if (this.vertices.length < 1) {
+    if (this.vertices) {
       var data = this.data;
-      var vertices = [];
+      var vertices = {};
 
       for (var i = 0; i < data.length; i++) {
-        var vertex = {};
-        vertex.vertex = i
-        vertex.edges = [];
+        // var vertex = {};
+        vertices[i] = {}
+        vertices[i].edges = [];
         for (var j = 0; j < data[i].length; j++) {
-          vertex.edges.push(data[i][j]);
+          vertices[i].edges.push(data[i][j]);
         }
-        vertices.push(vertex);
+        // vertices.push(vertex);
       }
 
       this.vertices = vertices
@@ -25,31 +25,19 @@ Graph.prototype.createGraph = function(){
   return this.vertices;
 }
 
-Graph.prototype.findVertex = function(vertex) {
-  var vertices = this.vertices
-  for (var i = 0; i < vertices.length; i++) {
-    if (vertices[i].vertex == vertex) {
-      var foundVertex = vertices[i];
-    }
-  }
-  return foundVertex;
-}
-
 Graph.prototype.addVertexWithEdges = function(edges) {
   var vertices = this.vertices
-  var newVertex = {};
 
-  newVertex.vertex = this.vertices.length;
-  newVertex.edges = edges;
-  vertices.push(newVertex)
-
-  for (var i = 0; i < vertices.length; i++) {
-    for (var j = 0; j < edges.length; j++) {
-      if (vertices[i].vertex == edges[j]) {
-        vertices[i].edges.push(newVertex.vertex);
-      }
-    }
+  for (var vertex in vertices) {
+    var newVertex = parseInt(vertex) + 1
   }
+
+  for (var i = 0; i < edges.length; i++) {
+    vertices[edges[i]].edges.push(newVertex)
+  }
+
+  vertices[newVertex] = {}
+  vertices[newVertex].edges = edges
 
   this.vertices = vertices
   return this.vertices;
@@ -58,38 +46,34 @@ Graph.prototype.addVertexWithEdges = function(edges) {
 Graph.prototype.deleteVertex = function(vertexToDelete) {
   var vertices = this.vertices;
 
-  for (var i = 0; i < vertices.length; i++) {
-    if (vertices[i].vertex == vertexToDelete) {
-      vertices.splice(i, 1);
-    }
-  }
-
-  for (var i = 0; i < vertices.length; i++) {
-    for (var j = 0; j < vertices[i].edges.length; j++) {
-      if (vertices[i].edges[j] == vertexToDelete) {
-        vertices[i].edges.splice(i, 1);
+  delete vertices[vertexToDelete];
+  for (var vertex in vertices) {
+    for (var i = 0; i < vertices[vertex].edges.length; i++) {
+      if (vertices[vertex].edges[i] == vertexToDelete) {
+        vertices[vertex].edges.splice(i,1);
       }
     }
   }
-
   this.vertices = vertices
   return this.vertices;
 }
 
 Graph.prototype.initializeDistances = function(inputVertices) {
-  inputVertices.forEach(function(vertex) {
-    vertex.distance = -1;
-  })
-  return inputVertices
+  for(var vertex in inputVertices) {
+    inputVertices[vertex].distance = -1
+  }
+  this.vertexToDelete = inputVertices
+  return this.vertexToDelete
 }
 
 Graph.prototype.getDistances = function(source) {
   var vertices = this.vertices
   this.initializeDistances(vertices);
-  var queue = new Queue();
 
+  var queue = new Queue();
   vertices[source].distance = 0;
   vertices[source].predecessor = null;
+
   queue.enqueue(vertices[source])
 
   while (queue.length > 0) {
@@ -103,16 +87,13 @@ Graph.prototype.getDistances = function(source) {
       }
     })
   }
+
   return vertices
 }
 
 Graph.prototype.shortestPath = function(start,end) {
-  var distances = this.getDistances(start)
-  for (var i = 0; i < distances.length; i++) {
-    if (distances[i].vertex == end) {
-      return distances[i].distance;
-    }
-  }
+  var distance = this.getDistances(start)
+  return distance[end].distance
 }
 
 
